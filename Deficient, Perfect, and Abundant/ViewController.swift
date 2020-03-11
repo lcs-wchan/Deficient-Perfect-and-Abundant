@@ -9,7 +9,9 @@
 import UIKit
 
 class ViewController: UIViewController {
-  @IBOutlet weak var Input: UITextField!
+    
+    @IBOutlet weak var inputBoxValue: UITextField!
+    @IBOutlet weak var Result: UILabel!
     
     
     
@@ -20,28 +22,42 @@ class ViewController: UIViewController {
     
     @IBAction func calculate(_ sender: Any) {
         
-    //Turn the imput into a constant
-    let n = Input(Int)
-    //Guard statement 1-32500 and INT
+        // Unwrap the optional string
+        guard let someStringInput = inputBoxValue.text else {
+            Result.text = "Hey, please enter something – an integer between 1 and 32500."
+            return
+        }
         
-
-    //Make a running count
-        var count = 0
+        // Take the string and try to make it an integer
+        guard let integerInput = Int(someStringInput) else {
+            Result.text  = "Please enter an integer."
+            return
+        }
         
-    //Make a loop to add to the running count
-        for num in 1...n/2 {
-            if
+        if integerInput < 0 && integerInput > 325000 {
+            Result.text  = "Please enter an integer between 0 and 325000."
+            return
         }
         
         
+
+        //Make a running count
+                var count = 0
         
-        
-        
-        
-        
-        
-        
-        
+        //Make a loop to add to the running count
+                for num in 1...integerInput/2 {
+                    if integerInput%num == 0{
+                        count += num
+                    }
+                }
+        // define deficient, perfect and abundant
+        if count > integerInput {
+            Result.text = "\(integerInput) is an abundant number."
+        } else if count == integerInput {
+            Result.text = "\(integerInput) is a perfect number"
+        } else {
+            Result.text = "\(integerInput) is a deficient number"
+        }
         
     }
 }
